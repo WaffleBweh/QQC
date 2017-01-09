@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 12, 2016 at 12:14 PM
+-- Generation Time: Jan 09, 2017 at 11:39 AM
 -- Server version: 5.7.13-log
 -- PHP Version: 7.0.10
 
@@ -37,23 +37,49 @@ CREATE TABLE `buildings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `class`
---
-
-DROP TABLE IF EXISTS `class`;
-CREATE TABLE `class` (
-  `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `classrooms`
 --
 
 DROP TABLE IF EXISTS `classrooms`;
 CREATE TABLE `classrooms` (
-  `name` varchar(20) NOT NULL
+  `name` varchar(20) NOT NULL,
+  `idBuilding` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deroule`
+--
+
+DROP TABLE IF EXISTS `deroule`;
+CREATE TABLE `deroule` (
+  `idLesson` varchar(10) NOT NULL,
+  `idClassroom` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `follow`
+--
+
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE `follow` (
+  `idStudent` int(11) NOT NULL,
+  `idLesson` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `give`
+--
+
+DROP TABLE IF EXISTS `give`;
+CREATE TABLE `give` (
+  `idTeacher` int(11) NOT NULL,
+  `idLesson` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -65,7 +91,8 @@ CREATE TABLE `classrooms` (
 DROP TABLE IF EXISTS `lesson`;
 CREATE TABLE `lesson` (
   `nickname` varchar(10) NOT NULL,
-  `fullname` varchar(50) NOT NULL
+  `fullname` varchar(50) NOT NULL,
+  `idSchoolTerms` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -104,7 +131,8 @@ CREATE TABLE `students` (
   `name` varchar(50) NOT NULL,
   `surname` varchar(50) NOT NULL,
   `phone` varchar(30) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL
+  `email` varchar(50) DEFAULT NULL,
+  `idStudentGroup` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -134,22 +162,39 @@ ALTER TABLE `buildings`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indexes for table `class`
---
-ALTER TABLE `class`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `classrooms`
 --
 ALTER TABLE `classrooms`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `idBuilding` (`idBuilding`);
+
+--
+-- Indexes for table `deroule`
+--
+ALTER TABLE `deroule`
+  ADD PRIMARY KEY (`idLesson`,`idClassroom`),
+  ADD KEY `idClassroom` (`idClassroom`);
+
+--
+-- Indexes for table `follow`
+--
+ALTER TABLE `follow`
+  ADD PRIMARY KEY (`idStudent`,`idLesson`),
+  ADD KEY `idLesson` (`idLesson`);
+
+--
+-- Indexes for table `give`
+--
+ALTER TABLE `give`
+  ADD PRIMARY KEY (`idTeacher`,`idLesson`),
+  ADD KEY `idLesson` (`idLesson`);
 
 --
 -- Indexes for table `lesson`
 --
 ALTER TABLE `lesson`
-  ADD PRIMARY KEY (`nickname`);
+  ADD PRIMARY KEY (`nickname`),
+  ADD KEY `idSchoolTerms` (`idSchoolTerms`);
 
 --
 -- Indexes for table `schoolterms`
@@ -167,7 +212,8 @@ ALTER TABLE `studentgroups`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idStudentGroup` (`idStudentGroup`);
 
 --
 -- Indexes for table `teachers`
@@ -180,11 +226,6 @@ ALTER TABLE `teachers`
 --
 
 --
--- AUTO_INCREMENT for table `class`
---
-ALTER TABLE `class`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
@@ -194,6 +235,49 @@ ALTER TABLE `students`
 --
 ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `classrooms`
+--
+ALTER TABLE `classrooms`
+  ADD CONSTRAINT `classrooms_ibfk_1` FOREIGN KEY (`idBuilding`) REFERENCES `buildings` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `deroule`
+--
+ALTER TABLE `deroule`
+  ADD CONSTRAINT `deroule_ibfk_1` FOREIGN KEY (`idLesson`) REFERENCES `lesson` (`nickname`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `deroule_ibfk_2` FOREIGN KEY (`idClassroom`) REFERENCES `classrooms` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `follow`
+--
+ALTER TABLE `follow`
+  ADD CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`idStudent`) REFERENCES `students` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`idLesson`) REFERENCES `lesson` (`nickname`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `give`
+--
+ALTER TABLE `give`
+  ADD CONSTRAINT `give_ibfk_1` FOREIGN KEY (`idTeacher`) REFERENCES `teachers` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `give_ibfk_2` FOREIGN KEY (`idLesson`) REFERENCES `lesson` (`nickname`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `lesson`
+--
+ALTER TABLE `lesson`
+  ADD CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`idSchoolTerms`) REFERENCES `schoolterms` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`idStudentGroup`) REFERENCES `studentgroups` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
