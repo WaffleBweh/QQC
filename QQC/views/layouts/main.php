@@ -37,9 +37,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Accueil', 'url' => ['/site/index']],
-            ['label' => 'Test', 'url' => ['/site/entry']],
             ['label' => 'À propos', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Ajout utilisateur [DEBUG]', 'url' => ['/backend-user']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Connexion', 'url' => ['/site/login']]
             ) : (

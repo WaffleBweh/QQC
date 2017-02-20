@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 09, 2017 at 11:39 AM
+-- Generation Time: Feb 20, 2017 at 02:23 PM
 -- Server version: 5.7.13-log
 -- PHP Version: 7.0.10
 
@@ -95,6 +95,14 @@ CREATE TABLE `lesson` (
   `idSchoolTerms` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `lesson`
+--
+
+INSERT INTO `lesson` (`nickname`, `fullname`, `idSchoolTerms`) VALUES
+('ATECH', 'Atelier Technicien', '1'),
+('M106', 'Module 106', '2');
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +115,14 @@ CREATE TABLE `schoolterms` (
   `start` date NOT NULL,
   `end` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `schoolterms`
+--
+
+INSERT INTO `schoolterms` (`id`, `start`, `end`) VALUES
+('1', '2016-09-01', '2016-12-31'),
+('2', '2017-01-01', '2017-06-01');
 
 -- --------------------------------------------------------
 
@@ -150,6 +166,27 @@ CREATE TABLE `teachers` (
   `phone` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `email` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
+(10, 'Guest', 'b3aa31597f34bb62144dd82fed5320fd42203876', '');
 
 --
 -- Indexes for dumped tables
@@ -222,6 +259,12 @@ ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -235,6 +278,11 @@ ALTER TABLE `students`
 --
 ALTER TABLE `teachers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Constraints for dumped tables
 --
