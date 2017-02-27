@@ -73,14 +73,13 @@ class BackendUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
 
     public function validatePassword($password)
     {
-        return sha1(md5($password))===$this->password;
+        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
     
     public function beforeSave($pass) {
         if (!empty($this->password)){
-            $this->password = sha1(md5($this->password));
+            $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
         }
-        
         return true;
     }
 }
