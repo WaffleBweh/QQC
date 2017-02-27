@@ -28,6 +28,8 @@ class BackendUser extends \yii\db\ActiveRecord implements \yii\web\IdentityInter
     public function rules()
     {
         return [
+            ['username', 'unique', 'message' => 'Ce nom d\'utilisateur est déjà utilisé.'],
+            ['email', 'unique', 'message' => 'Cette adresse email est déjà associée a un autre compte.'],
             [['username', 'password'], 'required'],
             [['username', 'email'], 'string', 'max' => 100],
             [['password'], 'string', 'max' => 250],
