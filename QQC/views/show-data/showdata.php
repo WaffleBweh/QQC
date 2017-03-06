@@ -4,34 +4,26 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\TeachersSearch */
+/* @var $searchModel app\models\StudentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Teachers';
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="teachers-index">
+$this->title = 'Students';
 
-    <h1><?= Html::encode($this->title) ?></h1>
+?>
+<div class="students-index">
+
+    <h1><?= "Read " . Html::encode($this->title) . " table" ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Teachers', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'name',
             'surname',
-            'nickname',
             'phone',
             'email:email',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'idStudentGroup',
         ],
     ]); ?>
 </div>

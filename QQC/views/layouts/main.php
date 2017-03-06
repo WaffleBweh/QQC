@@ -39,19 +39,20 @@ AppAsset::register($this);
             ['label' => 'Accueil', 'url' => ['/site/index']],
             ['label' => 'À propos', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Show data (test)', 'url' => ['/show-data']],
             [
             'label' => 'CRUDs',
-            'items' => [
-                 ['label' => 'Lessons', 'url' => 'index.php?r=lesson'],
-                 ['label' => 'Students', 'url' => 'index.php?r=students'],
-                 ['label' => 'Teachers', 'url' => 'index.php?r=teachers'],
-                 ['label' => 'Buildings', 'url' => 'index.php?r=buildings'],
-                 ['label' => 'Classrooms', 'url' => 'index.php?r=classrooms'],
-                 ['label' => 'Schoolterms', 'url' => 'index.php?r=schoolterms'],
-                 ['label' => 'Studentgroups', 'url' => 'index.php?r=studentgroups'],
+            'items' =>  [
+                        ['label' => 'Lessons', 'url' => 'index.php?r=lesson'],
+                        ['label' => 'Students', 'url' => 'index.php?r=students'],
+                        ['label' => 'Teachers', 'url' => 'index.php?r=teachers'],
+                        ['label' => 'Buildings', 'url' => 'index.php?r=buildings'],
+                        ['label' => 'Classrooms', 'url' => 'index.php?r=classrooms'],
+                        ['label' => 'Schoolterms', 'url' => 'index.php?r=schoolterms'],
+                        ['label' => 'Studentgroups', 'url' => 'index.php?r=studentgroups'],
+                        ['label' => 'Ajout utilisateur', 'url' => ['/backend-user']],
             ],
             ],
-            ['label' => 'Ajout utilisateur [DEBUG]', 'url' => ['/backend-user']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Connexion', 'url' => ['/site/login']]
             ) : (

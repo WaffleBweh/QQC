@@ -54,4 +54,9 @@ class Schoolterms extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Lesson::className(), ['idSchoolTerms' => 'id']);
     }
+    
+    public function getDisplayName()
+    {
+        return 'From ' . $this->start . ' to ' . $this->end;
+    }
 }
